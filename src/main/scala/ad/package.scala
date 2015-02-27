@@ -43,4 +43,15 @@ package object ad {
     }
   }
 
+  def sum(v: Variable*): Variable = new Variable {
+    override val value: Double = v.map(_.value).sum
+    override protected def differentiate(w: Double): Unit = {
+      v.map(_.propagate(w))
+    }
+  }
+
+  def sum(v: Variables): Variable = sum(v.seq: _*)
+
+  def norm(v: Variables, p: Double = 2): Variable = sum(v.map(_ ^ p): _*)
+
 }
