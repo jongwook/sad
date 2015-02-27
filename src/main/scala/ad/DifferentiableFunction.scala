@@ -1,0 +1,11 @@
+package ad
+
+case class DifferentiableFunction(f: Seq[Variable] => Variable) {
+
+  def apply(x: Double*): (Double, Seq[Double]) = {
+    val v = x.map(Variable.apply)
+    val y = f(v)
+    (y.value, y.diff(v: _*))
+  }
+
+}
